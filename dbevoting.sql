@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2024 at 03:16 PM
+-- Generation Time: Mar 19, 2024 at 05:58 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -41,8 +41,12 @@ CREATE TABLE `tb_calon` (
 --
 
 INSERT INTO `tb_calon` (`id_calon`, `id_pengguna`, `nip_bps`, `nama_pegawai`, `jabatan`, `status`) VALUES
-(37, 58, '340011713', 'Mega Wulansari, SE', 'Kasubbag Umum', '1'),
-(38, 59, '340013515', 'Ahmad Nur, SE', 'Statistisi Ahli Muda ', '1');
+(1, 59, '340013515', 'Ahmad Nur, SE', 'Statistisi Ahli Muda ', '1'),
+(2, 64, '340015809', 'Raflis, S.Kom', 'Statistisi Ahli Muda', '1'),
+(3, 67, '340017808', 'Lisa Putri Khairani, SST, MM', 'Statistisi Ahli Muda ', '1'),
+(4, 68, '340017906', 'Chairil Fadli, S.ST', 'Statistisi Ahli Madya (1-04-2023)', '1'),
+(5, 74, '340054590', 'Firlan, S.Si, M.Si', 'Pranata Komputer Ahli Muda ', '1'),
+(6, 91, '340062282', 'Kuci Purnomo, A.Md', 'Pustakawan Terampil (Fungsional Umum)', '1');
 
 -- --------------------------------------------------------
 
@@ -57,18 +61,17 @@ CREATE TABLE `tb_daftarvote` (
   `tanggal_mulai` datetime DEFAULT NULL,
   `tanggal_selesai` datetime DEFAULT NULL,
   `status_id` enum('0','1','2') DEFAULT NULL,
-  `flag_id` tinyint(4) DEFAULT NULL,
-  `tipe_pemilihan` enum('satu_kandidat','beberapa_kandidat') NOT NULL DEFAULT 'satu_kandidat'
+  `flag_id` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tb_daftarvote`
 --
 
-INSERT INTO `tb_daftarvote` (`daftarvote_id`, `nama`, `keterangan`, `tanggal_mulai`, `tanggal_selesai`, `status_id`, `flag_id`, `tipe_pemilihan`) VALUES
-(5, 'Pemilihan Karyawan Teladan', 'Ini adalah voting pemilihan karyawan terbaik', '2024-03-01 23:00:00', '2024-03-04 23:00:00', '1', 1, 'beberapa_kandidat'),
-(6, 'Pemilihan Ambasador', 'Ini adalah voting pemilihan ambasador', '2024-03-03 19:50:00', '2024-03-04 19:50:00', '1', 1, 'satu_kandidat'),
-(7, 'Pemilihan', 'Pemilihan', '2024-03-03 20:07:00', '2024-03-04 20:07:00', '1', 1, 'satu_kandidat');
+INSERT INTO `tb_daftarvote` (`daftarvote_id`, `nama`, `keterangan`, `tanggal_mulai`, `tanggal_selesai`, `status_id`, `flag_id`) VALUES
+(5, 'Pemilihan Karyawan Teladan', 'Ini adalah voting pemilihan karyawan terbaik', '2024-03-13 11:00:00', '2024-03-18 23:00:00', '1', 1),
+(6, 'Pemilihan Ambasador', 'Ini adalah voting pemilihan ambasador', '2024-03-03 19:50:00', '2024-03-18 23:00:00', '1', 1),
+(9, 'Pemilihan Change Ambasador', 'Ini pemilihan change ambasador', '2024-03-18 08:00:00', '2024-03-20 16:00:00', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -143,25 +146,21 @@ CREATE TABLE `tb_vote` (
   `daftarvote_id` int(11) DEFAULT NULL,
   `id_calon` varchar(2) DEFAULT NULL,
   `id_pemilih` int(11) DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
-  `bobot_suara` int(11) NOT NULL DEFAULT 0
+  `date` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tb_vote`
 --
 
-INSERT INTO `tb_vote` (`id_vote`, `daftarvote_id`, `id_calon`, `id_pemilih`, `date`, `bobot_suara`) VALUES
-(1, 5, '1', 65, '2024-03-03 23:57:32', 0),
-(2, 5, '3', 66, '2024-03-03 23:59:37', 0),
-(3, 5, '4', 67, '2024-03-04 00:02:49', 0),
-(4, 5, '2', 68, '2024-03-04 00:05:02', 0),
-(5, 5, '1', 58, '2024-03-04 01:49:21', 0),
-(6, 6, '1', 58, '2024-03-04 01:52:15', 0),
-(7, 6, '1', 62, '2024-03-04 01:55:58', 0),
-(8, 5, '1', 59, '2024-03-04 01:57:46', 0),
-(9, 5, '1', 61, '2024-03-04 10:01:26', 0),
-(10, 6, '1', 61, '2024-03-04 13:35:14', 0);
+INSERT INTO `tb_vote` (`id_vote`, `daftarvote_id`, `id_calon`, `id_pemilih`, `date`) VALUES
+(1, 5, '4', 58, '2024-03-18 08:32:47'),
+(2, 6, '3', 84, '2024-03-18 08:33:48'),
+(3, 5, '1', 59, '2024-03-18 08:34:17'),
+(4, 6, '5', 88, '2024-03-18 08:34:37'),
+(5, 5, '5', 64, '2024-03-18 08:35:07'),
+(6, 6, '4', 86, '2024-03-18 08:35:32'),
+(7, 9, '2', 61, '2024-03-18 10:25:42');
 
 -- --------------------------------------------------------
 
@@ -183,11 +182,20 @@ CREATE TABLE `tb_votekandidat` (
 
 INSERT INTO `tb_votekandidat` (`votekandidat_id`, `daftarvote_id`, `id_calon`, `no_urut`, `flag_id`) VALUES
 (1, 5, 1, 1, 1),
-(2, 5, 3, 2, 1),
-(3, 5, 4, 3, 1),
-(4, 5, 2, 4, 1),
-(5, 6, 1, NULL, 1),
-(6, 6, 3, NULL, 1);
+(2, 5, 4, 2, 1),
+(3, 5, 5, 3, 1),
+(4, 5, 3, 4, 1),
+(5, 5, 2, 5, 1),
+(8, 6, 1, 1, 1),
+(9, 6, 4, 2, 1),
+(10, 6, 5, 3, 1),
+(11, 6, 3, 4, 1),
+(12, 6, 2, 5, 1),
+(13, 9, 1, NULL, 1),
+(14, 9, 2, NULL, 1),
+(15, 9, 3, NULL, 1),
+(16, 9, 4, NULL, 1),
+(17, 9, 5, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -208,37 +216,55 @@ CREATE TABLE `tb_votepemilih` (
 --
 
 INSERT INTO `tb_votepemilih` (`votepemilih_id`, `daftarvote_id`, `id_pemilih`, `flag_id`, `status_id`) VALUES
-(1, 5, 65, 1, '2'),
-(2, 5, 66, 1, '2'),
-(3, 5, 67, 1, '2'),
-(4, 5, 68, 1, '2'),
-(5, 5, 58, 1, '2'),
-(6, 5, 59, 1, '2'),
-(7, 5, 60, 1, '1'),
-(8, 5, 61, 1, '2'),
-(9, 6, 58, 1, '2'),
-(10, 6, 59, 1, '1'),
-(11, 6, 60, 1, '1'),
-(12, 6, 61, 1, '2'),
-(13, 6, 62, 1, '2');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `v_vote`
--- (See below for the actual view)
---
-CREATE TABLE `v_vote` (
-);
-
--- --------------------------------------------------------
-
---
--- Structure for view `v_vote`
---
-DROP TABLE IF EXISTS `v_vote`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`ipay`@`%` SQL SECURITY DEFINER VIEW `v_vote`  AS SELECT `a`.`id_vote` AS `id_vote`, `a`.`daftarvote_id` AS `daftarvote_id`, `a`.`id_calon` AS `id_calon`, `a`.`id_pemilih` AS `id_pemilih`, `a`.`date` AS `date`, `b`.`nama_calon` AS `nama_calon`, `b`.`foto_calon` AS `foto_calon`, `b`.`keterangan` AS `keterangan`, `c`.`nama_pengguna` AS `nama_pemilih` FROM ((`tb_vote` `a` join `tb_calon` `b` on(`a`.`id_calon` = `b`.`id_calon`)) join `tb_pengguna` `c` on(`a`.`id_pemilih` = `c`.`id_pengguna`))  ;
+(1, 5, 58, 1, '2'),
+(2, 5, 59, 1, '2'),
+(3, 5, 60, 1, '1'),
+(4, 5, 61, 1, '1'),
+(5, 5, 62, 1, '1'),
+(6, 5, 64, 1, '2'),
+(7, 6, 82, 1, '1'),
+(8, 6, 83, 1, '1'),
+(9, 6, 84, 1, '2'),
+(10, 6, 85, 1, '1'),
+(11, 6, 86, 1, '2'),
+(12, 6, 87, 1, '1'),
+(13, 6, 88, 1, '2'),
+(14, 5, 82, 1, '1'),
+(15, 5, 83, 1, '1'),
+(16, 9, 58, 1, '1'),
+(17, 9, 59, 1, '1'),
+(18, 9, 60, 1, '1'),
+(19, 9, 61, 1, '2'),
+(20, 9, 62, 1, '1'),
+(21, 9, 64, 1, '1'),
+(22, 9, 65, 1, '1'),
+(23, 9, 66, 1, '1'),
+(24, 9, 67, 1, '1'),
+(25, 9, 68, 1, '1'),
+(26, 9, 69, 1, '1'),
+(27, 9, 70, 1, '1'),
+(28, 9, 71, 1, '1'),
+(29, 9, 72, 1, '1'),
+(30, 9, 73, 1, '1'),
+(31, 9, 74, 1, '1'),
+(32, 9, 75, 1, '1'),
+(33, 9, 76, 1, '1'),
+(34, 9, 77, 1, '1'),
+(35, 9, 78, 1, '1'),
+(36, 9, 79, 1, '1'),
+(37, 9, 80, 1, '1'),
+(38, 9, 81, 1, '1'),
+(39, 9, 82, 1, '1'),
+(40, 9, 83, 1, '1'),
+(41, 9, 84, 1, '1'),
+(42, 9, 85, 1, '1'),
+(43, 9, 86, 1, '1'),
+(44, 9, 87, 1, '1'),
+(45, 9, 88, 1, '1'),
+(46, 9, 89, 1, '1'),
+(47, 9, 90, 1, '1'),
+(48, 9, 91, 1, '1'),
+(49, 9, 92, 1, '1');
 
 --
 -- Indexes for dumped tables
@@ -291,13 +317,13 @@ ALTER TABLE `tb_votepemilih`
 -- AUTO_INCREMENT for table `tb_calon`
 --
 ALTER TABLE `tb_calon`
-  MODIFY `id_calon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_calon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_daftarvote`
 --
 ALTER TABLE `tb_daftarvote`
-  MODIFY `daftarvote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `daftarvote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_pengguna`
@@ -309,19 +335,19 @@ ALTER TABLE `tb_pengguna`
 -- AUTO_INCREMENT for table `tb_vote`
 --
 ALTER TABLE `tb_vote`
-  MODIFY `id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_votekandidat`
 --
 ALTER TABLE `tb_votekandidat`
-  MODIFY `votekandidat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `votekandidat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tb_votepemilih`
 --
 ALTER TABLE `tb_votepemilih`
-  MODIFY `votepemilih_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `votepemilih_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
